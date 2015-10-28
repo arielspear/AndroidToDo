@@ -44,3 +44,6 @@ public class  MainActivity extends ListActivity {
         mAdapter.notifyDataSetChanged();
     }
 }
+
+new Select().from(Task.class).execute();
+new Select().from(Task.class).where("Description = ?");
