@@ -1,4 +1,4 @@
-package arielspear.todo;
+package arielspear.todo.ui;
 
 import android.app.ListActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+
+import arielspear.todo.R;
+import arielspear.todo.models.Task;
 
 public class  MainActivity extends ListActivity {
 
@@ -27,6 +30,10 @@ public class  MainActivity extends ListActivity {
         mNewTaskButton = (Button) findViewById(R.id.taskSubmitButton);
         mNewTaskText = (EditText) findViewById(R.id.newTaskText);
         mTasks = new ArrayList<>();
+
+        for( Task task : Task.all()) {
+            mTasks.add(task.getDescription());
+        }
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mTasks);
         setListAdapter(mAdapter);
 
@@ -39,11 +46,10 @@ public class  MainActivity extends ListActivity {
     }
 
     private void addTask() {
-        String newTask = mNewTaskText.getText().toString();
-        mTasks.add(newTask);
+        String description = mNewTaskText.getText().toString();
+        Task newTask = new Task(description);
+        newTask.save();
+        mTasks.add(description);
         mAdapter.notifyDataSetChanged();
     }
 }
-
-new Select().from(Task.class).execute();
-new Select().from(Task.class).where("Description = ?");
